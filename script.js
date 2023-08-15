@@ -1,97 +1,102 @@
 function Gameboard() {
-    const board = []
-    const rows = 3
-    const columns = 3
-
-    for (let i = 0; i < rows; i++) {
-        board[i] = []
-        for (let j = 0; j < columns; j++) {
-            board[i].push(Cell());
-        }
+    board = []
+    for (let i = 1; i < 10; i++) {
+        board.push(squareFactory())
     }
 
-    const getBoard = () => board;
-
-    const markSquare = (row, column, player) => {
-        if (board[row][column] !== 0) {
-            return
-        } else {
-            board[row][column].addMove(player)
-        }
-    }
+    const getBoard = () => board
 
     const printBoard = () => {
-        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
+        const boardWithCellValues = board.map((square) => square.getValue())
         console.log(boardWithCellValues)
     }
 
-    return { getBoard, markSquare, printBoard }
+    const markSquare = (square, player) => {
+        if (board[square].getValue() !== 0) {
+            return
+        } else {
+            board[square].placeMark(player)
+        }
+    }
+
+    return { getBoard, printBoard, markSquare }
 }
 
-/*--------------------------------------------------------------*/
-
-function Cell() {
-    let value = 0;
-
-    const addMove = (player) => {
-        value = player
-    }
+function squareFactory() {
+    let value = 0
 
     const getValue = () => value
 
-    return {
-        addMove,
-        getValue
+    const placeMark = (player) => {
+        value = player
     }
+
+    return { getValue, placeMark }
+
 }
 
-/*--------------------------------------------------------------*/
-
-function GameController(
+function gameController(
     playerOneName = "Player One",
     playerTwoName = "Player Two"
 ) {
-    const board = Gameboard();
+    const board = Gameboard()
 
     const players = [
         {
             name: playerOneName,
-            token: "X"
+            mark: 1
         },
         {
             name: playerTwoName,
-            token: "O"
+            mark: 2
         }
     ]
 
     let activePlayer = players[0]
 
     const switchPlayerTurn = () => {
-        activePlayer = activePlayer === players[0] ? players[1] : players[0]
-    }
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+      };
 
-    const getActivePlayer = () => activePlayer
+    const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
-        board.printBoard()
-        console.log(`${getActivePlayer().name}'s turn.`)
+        board.printBoard();
     }
 
-    const playRound = (row, column) => {
-        console.log(`${getActivePlayer().name} marks their ${getActivePlayer().token}`)
-        board.markSquare(row, column, getActivePlayer().token)
-        switchPlayerTurn()
-        printNewRound()
+    const checkForWin = (square) => {
+        const squares = board.getBoard()
+        if (square === 0) {
+            return (((squares[0].getValue() === squares[1].getValue()) && (squares[1].getValue() === squares[2].getValue())) || ((squares[0].getValue() === squares[3].getValue()) && (squares[3].getValue() === squares[6].getValue())) || ((squares[0].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[8].getValue())))
+        } else if (square === 1) {
+            return (((squares[1].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[2].getValue())) || ((squares[1].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[7].getValue())))
+        } else if (square === 2) {
+            return (((squares[2].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[1].getValue())) || ((squares[2].getValue() === squares[5].getValue()) && (squares[5].getValue() === squares[8].getValue())) || ((squares[2].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[6].getValue())))
+        } else if (square === 3) {
+            return (((squares[3].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[5].getValue())) || ((squares[3].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[6].getValue())))
+        } else if (square === 4) {
+            return (((squares[4].getValue() === squares[3].getValue()) && (squares[3].getValue() === squares[5].getValue())) || ((squares[4].getValue() === squares[1].getValue()) && (squares[1].getValue() === squares[7].getValue())) || ((squares[4].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[8].getValue())) || ((squares[4].getValue() === squares[2].getValue()) && (squares[2].getValue() === squares[6].getValue())))
+        } else if (square === 5) {
+            return (((squares[5].getValue() === squares[3].getValue()) && (squares[3].getValue() === squares[4].getValue())) || ((squares[5].getValue() === squares[2].getValue()) && (squares[2].getValue() === squares[8].getValue())))
+        } else if (square === 6) {
+            return (((squares[6].getValue() === squares[7].getValue()) && (squares[7].getValue() === squares[8].getValue())) || ((squares[6].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[3].getValue())) || ((squares[6].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[3].getValue())))
+        } else if (square === 7) {
+            return (((squares[7].getValue() === squares[1].getValue()) && (squares[1].getValue() === squares[4].getValue())) || ((squares[7].getValue() === squares[6].getValue()) && (squares[6].getValue() === squares[8].getValue())))
+        } else if (square === 8) {
+            return (((squares[8].getValue() === squares[6].getValue()) && (squares[6].getValue() === squares[7].getValue())) || ((squares[8].getValue() === squares[2].getValue()) && (squares[2].getValue() === squares[5].getValue())) || ((squares[8].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[0].getValue())))
+        }
     }
 
-    printNewRound();
-
-    return {
-        playRound,
-        getActivePlayer
+    const playRound = (square) => {
+        board.markSquare(square, getActivePlayer().mark)
+        if (checkForWin(square)) {
+            console.log(`${getActivePlayer().name} WINS!`)
+        };
+        switchPlayerTurn();
+        printNewRound();
     }
+
+    return { playRound, getActivePlayer, checkForWin }
 }
 
-/*--------------------------------------------------------------*/
-
-const game = GameController()
+let game = gameController()

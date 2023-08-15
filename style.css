@@ -51,16 +51,3 @@ table {
 
 /* END RESET */
 
-.grid {
-	display: grid;
-}
-
-.game-board {
-	grid-template-columns: repeat(3, 200px);
-	grid-template-rows: repeat(3, 200px);
-	padding: 1em;
-	justify-content: center;
-	justify-items: center;
-	align-items: center;
-	gap: 10px;
-}

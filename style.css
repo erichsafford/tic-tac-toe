@@ -50,4 +50,26 @@ table {
 }
 
 /* END RESET */
+body {
 
+}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(3, 150px);
+	grid-template-rows: repeat(3, 150px);
+	gap: 1em;
+	justify-content: center;
+	margin-block: 3em;
+	margin-inline: 5em;
+	padding-block: 1em;
+	background-color: black;
+	box-shadow: 0 0 30px gray;
+	border-radius: 20px;
+}
+
+.square {
+	background-color: white;
+	padding: 25px;
+
+}

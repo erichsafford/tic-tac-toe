@@ -8,7 +8,7 @@ function Gameboard() {
 
     const printBoard = () => {
         const boardWithCellValues = board.map((square) => square.getValue())
-        console.log(boardWithCellValues)
+        return boardWithCellValues
     }
 
     const markSquare = (square, player) => {
@@ -60,10 +60,6 @@ function gameController(
 
     const getActivePlayer = () => activePlayer;
 
-    const printNewRound = () => {
-        board.printBoard();
-    }
-
     const checkForWin = (square) => {
         const squares = board.getBoard()
         if (square === 0) {
@@ -93,10 +89,49 @@ function gameController(
             console.log(`${getActivePlayer().name} WINS!`)
         };
         switchPlayerTurn();
-        printNewRound();
+        clearScreen()
+        displayController();
     }
 
-    return { playRound, getActivePlayer, checkForWin }
+    return { playRound, getActivePlayer, board }
 }
 
 let game = gameController()
+
+function clearScreen() {
+    const valueBoard = game.board.printBoard()
+    const container = document.querySelector('.container')
+    for (i = 0; i < valueBoard.length; i++) {
+        let squareToRemove = document.querySelector('.square')
+        container.removeChild(squareToRemove)
+    }
+}
+
+function displayController() {
+    const valueBoard = game.board.printBoard()
+    const container = document.querySelector('.container')
+    for (i = 0; i < valueBoard.length; i++) {
+        const div = document.createElement('div')
+        div.classList.add('square')
+        div.setAttribute('id', `${i}`)
+        div.addEventListener('click', function (e) {
+            game.playRound(e.target.id)
+
+        })
+        container.appendChild(div)
+        if (valueBoard[i] === 1) {
+            const cross = document.createElement('img')
+            cross.src = 'img/cross.svg'
+            div.appendChild(cross)
+        } else if (valueBoard[i] === 2) {
+            const naught = document.createElement('img')
+            naught.src = 'img/circle.svg'
+            div.appendChild(naught)
+        }
+    }
+}
+
+
+
+displayController()
+

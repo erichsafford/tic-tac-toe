@@ -62,23 +62,23 @@ function gameController(
 
     const checkForWin = (square) => {
         const squares = board.getBoard()
-        if (square === 0) {
+        if (square === "0") {
             return (((squares[0].getValue() === squares[1].getValue()) && (squares[1].getValue() === squares[2].getValue())) || ((squares[0].getValue() === squares[3].getValue()) && (squares[3].getValue() === squares[6].getValue())) || ((squares[0].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[8].getValue())))
-        } else if (square === 1) {
+        } else if (square === "1") {
             return (((squares[1].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[2].getValue())) || ((squares[1].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[7].getValue())))
-        } else if (square === 2) {
+        } else if (square === "2") {
             return (((squares[2].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[1].getValue())) || ((squares[2].getValue() === squares[5].getValue()) && (squares[5].getValue() === squares[8].getValue())) || ((squares[2].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[6].getValue())))
-        } else if (square === 3) {
+        } else if (square === "3") {
             return (((squares[3].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[5].getValue())) || ((squares[3].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[6].getValue())))
-        } else if (square === 4) {
+        } else if (square === "4") {
             return (((squares[4].getValue() === squares[3].getValue()) && (squares[3].getValue() === squares[5].getValue())) || ((squares[4].getValue() === squares[1].getValue()) && (squares[1].getValue() === squares[7].getValue())) || ((squares[4].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[8].getValue())) || ((squares[4].getValue() === squares[2].getValue()) && (squares[2].getValue() === squares[6].getValue())))
-        } else if (square === 5) {
+        } else if (square === "5") {
             return (((squares[5].getValue() === squares[3].getValue()) && (squares[3].getValue() === squares[4].getValue())) || ((squares[5].getValue() === squares[2].getValue()) && (squares[2].getValue() === squares[8].getValue())))
-        } else if (square === 6) {
+        } else if (square === "6") {
             return (((squares[6].getValue() === squares[7].getValue()) && (squares[7].getValue() === squares[8].getValue())) || ((squares[6].getValue() === squares[0].getValue()) && (squares[0].getValue() === squares[3].getValue())) || ((squares[6].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[3].getValue())))
-        } else if (square === 7) {
+        } else if (square === "7") {
             return (((squares[7].getValue() === squares[1].getValue()) && (squares[1].getValue() === squares[4].getValue())) || ((squares[7].getValue() === squares[6].getValue()) && (squares[6].getValue() === squares[8].getValue())))
-        } else if (square === 8) {
+        } else if (square === "8") {
             return (((squares[8].getValue() === squares[6].getValue()) && (squares[6].getValue() === squares[7].getValue())) || ((squares[8].getValue() === squares[2].getValue()) && (squares[2].getValue() === squares[5].getValue())) || ((squares[8].getValue() === squares[4].getValue()) && (squares[4].getValue() === squares[0].getValue())))
         }
     }
